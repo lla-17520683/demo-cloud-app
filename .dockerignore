@@ -1,0 +1,12 @@
+.gradle/
+build/
+.gradle
+.idea/
+.kilo/
+*.iml
+.git/
+.git
+.gitattributes
+.gitignore
+Dockerfile
+.dockerignore

@@ -1,0 +1,18 @@
+server:
+  port: ${PORT:8090}
+
+spring:
+  application:
+    name: cloud-app
+
+  mongodb:
+    uri: ${MONGODB_URI:mongodb://localhost:27017/cloud_app_db}
+
+logging:
+  level:
+    ROOT: ${LOG_LEVEL:WARN}
+#    org.springframework.data.mongodb.core.MongoTemplate: ${LOG_MONGO_LEVEL:DEBUG} # Show query MongoTemplate
+#    org.springframework.data.mongodb.core.MongoTemplate: ${LOG_MONGO_LEVEL:ERROR}
+
+api:
+  number-service-url: ${NUMBER_URL:http://localhost:8080}
