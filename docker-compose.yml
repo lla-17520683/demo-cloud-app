@@ -1,0 +1,37 @@
+services:
+
+  demo-java26:
+    build:
+      context: ../demo-java26
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      LOGGING_STRUCTURED_FORMAT_CONSOLE: logstash
+      OTEL_SERVICE_NAME: demo-java26
+      OTEL_INSTRUMENTATION_LOGBACK_MDC_ENABLED: "true"
+      OTEL_JAVAAGENT_LOGGING: none # not spam log startup self
+      OTEL_TRACES_EXPORTER: none
+    networks:
+      - app_net
+
+  demo-cloud-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8090:8080"
+    environment:
+      NUMBER_URL: http://demo-java26:8080
+      LOGGING_STRUCTURED_FORMAT_CONSOLE: logstash
+      OTEL_SERVICE_NAME: demo-cloud-app
+      OTEL_INSTRUMENTATION_LOGBACK_MDC_ENABLED: "true"
+      OTEL_JAVAAGENT_LOGGING: none # not spam log startup self
+      OTEL_TRACES_EXPORTER: none
+    networks:
+      - app_net
+
+
+networks:
+  app_net:
+    driver: bridge

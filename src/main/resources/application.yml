@@ -9,10 +9,16 @@ spring:
     uri: ${MONGODB_URI:mongodb://localhost:27017/cloud_app_db}
 
 logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSSXXX} [%level] [%thread] %logger - %msg%n"
+#    console: "%d{yyyy-MM-dd HH:mm:ss.SSSXXX} [%level] [traceId=%X{trace_id}] %logger - %msg%n"
   level:
-    ROOT: ${LOG_LEVEL:WARN}
-#    org.springframework.data.mongodb.core.MongoTemplate: ${LOG_MONGO_LEVEL:DEBUG} # Show query MongoTemplate
-#    org.springframework.data.mongodb.core.MongoTemplate: ${LOG_MONGO_LEVEL:ERROR}
+    root: ${LOG_LEVEL:INFO}
+
+  structured:
+    json:
+      rename:
+        logger_name: class
 
 api:
   number-service-url: ${NUMBER_URL:http://localhost:8080}
