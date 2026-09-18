@@ -1,5 +1,6 @@
 package com.example.cloud_app.controller;
 
+import com.example.cloud_app.service.AppService;
 import com.example.cloud_app.service.NumberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
 
     private final NumberService numberService;
+    private final AppService appService;
 
     @GetMapping
     public ResponseEntity<?> ok() {
@@ -18,16 +20,12 @@ public class Controller {
         return ResponseEntity.ok("Everything is so good! " + health);
     }
 
-    @GetMapping("random")
+    @GetMapping("api2")
     public ResponseEntity<?> randomException() {
-        int id = numberService.getRandomNumber();
-        if (id == 0) {
-            numberService.failure();
-        }
-        return ResponseEntity.ok(id);
+        return ResponseEntity.ok(appService.callRandom());
     }
 
-    @GetMapping("failure")
+    @GetMapping("api3")
     public ResponseEntity<?> failure() {
         numberService.failure();
         return ResponseEntity.ok("This should never be reached");
@@ -35,6 +33,6 @@ public class Controller {
 
     @GetMapping("people")
     public ResponseEntity<?> getAllPersons() {
-        return ResponseEntity.ok(numberService.findPeople());
+        return ResponseEntity.ok(appService.findPeople());
     }
 }

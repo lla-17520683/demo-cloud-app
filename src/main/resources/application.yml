@@ -6,19 +6,15 @@ spring:
     name: cloud-app
 
   mongodb:
-    uri: ${MONGODB_URI:mongodb://localhost:27017/cloud_app_db}
+    uri: ${MONGODB_URI:mongodb://localhost:27017}
+    database: ${MONGODB_DATABASE:cloud_app_db}
 
 logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSSXXX} [%level] [%thread] %logger - %msg%n"
-#    console: "%d{yyyy-MM-dd HH:mm:ss.SSSXXX} [%level] [traceId=%X{trace_id}] %logger - %msg%n"
   level:
     root: ${LOG_LEVEL:INFO}
 
-  structured:
-    json:
-      rename:
-        logger_name: class
-
 api:
-  number-service-url: ${NUMBER_URL:http://localhost:8080}
+#  number-service-url: ${NUMBER_URL:http://localhost:8080}
+  number-service-url: ${NUMBER_URL:https://service-b.thankfuldesert-9ed02e7b.eastasia.azurecontainerapps.io}

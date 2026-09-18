@@ -4,14 +4,11 @@ services:
     build:
       context: ../demo-java26
       dockerfile: Dockerfile
+    container_name: demo-java26
     ports:
       - "8080:8080"
     environment:
-      LOGGING_STRUCTURED_FORMAT_CONSOLE: logstash
-      OTEL_SERVICE_NAME: demo-java26
-      OTEL_INSTRUMENTATION_LOGBACK_MDC_ENABLED: "true"
-      OTEL_JAVAAGENT_LOGGING: none # not spam log startup self
-      OTEL_TRACES_EXPORTER: none
+      APPLICATIONINSIGHTS_CONNECTION_STRING: InstrumentationKey=bc7bf2a2-f8cc-47c9-a613-6d13815db48d;IngestionEndpoint=https://eastasia-0.in.applicationinsights.azure.com/;LiveEndpoint=https://eastasia.livediagnostics.monitor.azure.com/;ApplicationId=f4f3c68c-c524-4e8f-a515-30fe80743ad5
     networks:
       - app_net
 
@@ -19,15 +16,22 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: demo-cloud-app
     ports:
-      - "8090:8080"
+      - "8090:8090"
     environment:
       NUMBER_URL: http://demo-java26:8080
-      LOGGING_STRUCTURED_FORMAT_CONSOLE: logstash
-      OTEL_SERVICE_NAME: demo-cloud-app
-      OTEL_INSTRUMENTATION_LOGBACK_MDC_ENABLED: "true"
-      OTEL_JAVAAGENT_LOGGING: none # not spam log startup self
-      OTEL_TRACES_EXPORTER: none
+      MONGODB_URI: mongodb://mongodb:27017
+      APPLICATIONINSIGHTS_CONNECTION_STRING: InstrumentationKey=bc7bf2a2-f8cc-47c9-a613-6d13815db48d;IngestionEndpoint=https://eastasia-0.in.applicationinsights.azure.com/;LiveEndpoint=https://eastasia.livediagnostics.monitor.azure.com/;ApplicationId=f4f3c68c-c524-4e8f-a515-30fe80743ad5
+    depends_on:
+      - mongodb
+    networks:
+      - app_net
+
+  mongodb:
+    image: mongo:8.0
+    ports:
+      - "27017:27017"
     networks:
       - app_net
 
