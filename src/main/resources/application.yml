@@ -1,5 +1,7 @@
 server:
   port: ${PORT:8090}
+#  servlet:
+#    context-path: /a
 
 spring:
   application:
@@ -16,5 +18,6 @@ logging:
     root: ${LOG_LEVEL:INFO}
 
 api:
-#  number-service-url: ${NUMBER_URL:http://localhost:8080}
-  number-service-url: ${NUMBER_URL:https://service-b.thankfuldesert-9ed02e7b.eastasia.azurecontainerapps.io}
+#  number-service-url: ${NUMBER_URL:https://iden-service.yellowriver-8d419010.indonesiacentral.azurecontainerapps.io}
+  number-service-url: ${NUMBER_URL:http://localhost:8080}
+  net-url: ${NET_URL:http://dotnet-service:8085}

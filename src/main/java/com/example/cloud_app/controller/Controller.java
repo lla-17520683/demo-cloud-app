@@ -15,6 +15,11 @@ public class Controller {
     private final AppService appService;
 
     @GetMapping
+    public ResponseEntity<?> good() {
+        return ResponseEntity.ok("good good");
+    }
+
+    @GetMapping("api1")
     public ResponseEntity<?> ok() {
         var health = numberService.getHealth();
         return ResponseEntity.ok("Everything is so good! " + health);

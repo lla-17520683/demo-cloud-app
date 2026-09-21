@@ -16,4 +16,5 @@ public class Person {
     @Id
     private Integer id;
     private String name;
+    private Double money;
 }

@@ -3,9 +3,12 @@ package com.example.cloud_app.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientResponseException;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +19,9 @@ public class NumberService {
 
     @Value("${api.number-service-url}")
     private String baseUrl;
+
+    @Value("${api.net-url}")
+    private String netUrl;
 
     public String getHealth() {
         log.info("Calling number-service health check at {}", baseUrl + "/actuator/health");
@@ -48,5 +54,19 @@ public class NumberService {
                 .uri(baseUrl + "/divide")
                 .retrieve()
                 .body(Double.class);
+    }
+
+    public List<Double> getMoney() {
+        log.info("Calling net-service at {}", netUrl);
+        try {
+            return restClient.get()
+                    .uri(netUrl + "/api/money")
+                    .retrieve()
+                    .body(new ParameterizedTypeReference<List<Double>>() {});
+        }
+        catch (RestClientResponseException e) {
+            log.error(e.getMessage());
+            throw new RuntimeException("Failed to call net-service", e);
+        }
     }
 }

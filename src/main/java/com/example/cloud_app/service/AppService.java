@@ -43,6 +43,20 @@ public class AppService {
             );
             repo.saveAll(people);
         }
-        return repo.findAll();
+        var people = repo.findAll();
+        optional(people);
+        return people;
+    }
+
+    private void optional(List<Person> people) {
+        try {
+            var money = numberService.getMoney();
+            for (int i = 0; i < people.size(); ++i) {
+                people.get(i).setMoney(money.get(i));
+            }
+        }
+        catch (Exception e) {
+            log.error("Failed to get money from net-service: {}", e.getMessage());
+        }
     }
 }

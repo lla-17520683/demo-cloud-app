@@ -20,7 +20,6 @@ RUN echo "${AI_AGENT_SHA256}  applicationinsights-agent.jar" | sha256sum -c -
 
 ENV OTEL_INSTRUMENTATION_LOGBACK_MDC_ENABLED="true"
 ENV LOGGING_STRUCTURED_FORMAT_CONSOLE="logstash"
-ENV OTEL_SERVICE_NAME="service-a"
 
 EXPOSE 8080
 ENTRYPOINT ["java", "-javaagent:/app/applicationinsights-agent.jar", "-jar", "/app/app.jar"]
